@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ใจอักษร — หน้าแอดมิน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Noto+Serif+Thai:wght@500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night-1:#181026; --night-2:#241834; --night-3:#2f2044; --panel:#2a1d3d;
+    --seal:#b5495b; --gold:#d4a857; --gold-soft:#e6c88a; --cream:#f3e9da;
+    --lavender:#a896c7; --lavender-dim:#5f5279; --ok:#8fd18f; --err:#e08b98;
+    --serif:'Noto Serif Thai','Playfair Display',serif; --ui:'Noto Sans Thai',sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--night-1); color:var(--cream); font-family:var(--ui); min-height:100vh;}
+  button{font-family:var(--ui); cursor:pointer; border:none; background:none; color:inherit;}
+  input{font-family:var(--ui);}
+
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between; padding:16px 28px;
+    border-bottom:1px solid rgba(212,168,87,0.16); position:sticky; top:0; background:rgba(24,16,38,0.92);
+    backdrop-filter:blur(8px); z-index:10;
+  }
+  .brand{font-family:var(--serif); font-size:20px; font-weight:700; display:flex; align-items:center; gap:8px;}
+  .brand .tag{font-size:10.5px; background:var(--seal); color:var(--cream); padding:3px 8px; border-radius:6px; font-family:var(--ui); font-weight:600; letter-spacing:0.04em;}
+  .who{display:flex; align-items:center; gap:14px; font-size:13.5px; color:var(--lavender);}
+  .btn{padding:9px 16px; border-radius:9px; font-size:13.5px; font-weight:600; transition:transform .12s, opacity .12s;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn-gold{background:linear-gradient(135deg,var(--gold-soft),var(--gold)); color:var(--night-1);}
+  .btn-ghost{border:1px solid rgba(243,233,218,0.25);}
+  .btn-seal{background:var(--seal); color:var(--cream);}
+  .btn-sm{padding:7px 13px; font-size:12.5px;}
+
+  main{max-width:920px; margin:0 auto; padding:36px 24px 80px;}
+  .stat-strip{display:flex; gap:14px; margin-bottom:30px; flex-wrap:wrap;}
+  .stat{background:var(--panel); border:1px solid rgba(212,168,87,0.16); border-radius:12px; padding:16px 20px; min-width:140px;}
+  .stat .n{font-family:var(--serif); font-size:24px; color:var(--gold-soft); font-weight:700;}
+  .stat .l{font-size:11.5px; color:var(--lavender); margin-top:2px;}
+
+  h2{font-family:var(--serif); font-size:19px; margin-bottom:16px; display:flex; align-items:center; gap:10px;}
+  .count-badge{font-size:11.5px; background:rgba(212,168,87,0.16); color:var(--gold-soft); padding:2px 9px; border-radius:999px; font-family:var(--ui); font-weight:600;}
+
+  .req-card{
+    display:flex; gap:16px; background:var(--panel); border:1px solid rgba(212,168,87,0.14);
+    border-radius:14px; padding:16px; margin-bottom:14px; align-items:center;
+  }
+  .req-card img{width:88px; height:64px; object-fit:cover; border-radius:9px; border:1px solid rgba(243,233,218,0.15); cursor:zoom-in; flex-shrink:0;}
+  .req-card .skeleton{width:88px; height:64px; border-radius:9px; background:linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.12), rgba(255,255,255,0.05)); background-size:200% 100%; animation:shine 1.4s infinite; flex-shrink:0;}
+  @keyframes shine{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+  .req-info{flex:1; min-width:0;}
+  .req-info .t{font-family:var(--serif); font-size:14.5px; margin-bottom:3px;}
+  .req-info .m{font-size:12px; color:var(--lavender); display:flex; gap:10px; flex-wrap:wrap;}
+  .req-info .price{color:var(--gold-soft); font-weight:600;}
+  .req-actions{display:flex; gap:8px; flex-shrink:0;}
+
+  .status-pill{font-size:11.5px; padding:5px 12px; border-radius:999px; font-weight:600; flex-shrink:0;}
+  .status-approved{background:rgba(143,209,143,0.14); color:var(--ok); border:1px solid rgba(143,209,143,0.3);}
+  .status-rejected{background:rgba(181,73,91,0.14); color:var(--err); border:1px solid rgba(181,73,91,0.3);}
+
+  .empty{padding:36px; text-align:center; color:var(--lavender-dim); font-size:13.5px; border:1px dashed rgba(243,233,218,0.18); border-radius:12px;}
+
+  .modal-bg{
+    display:none; position:fixed; inset:0; background:rgba(10,6,16,0.85); z-index:50;
+    align-items:center; justify-content:center; padding:24px; backdrop-filter:blur(4px);
+  }
+  .modal-bg.open{display:flex;}
+  .modal-bg img{max-width:min(90vw,600px); max-height:80vh; border-radius:12px; border:1px solid rgba(212,168,87,0.3);}
+  .modal-close{position:fixed; top:22px; right:26px; width:38px; height:38px; border-radius:50%; border:1px solid rgba(243,233,218,0.3); font-size:18px;}
+
+  .login-wrap{min-height:80vh; display:flex; align-items:center; justify-content:center; padding:24px;}
+  .login-card{width:360px; background:var(--panel); border:1px solid rgba(212,168,87,0.2); border-radius:16px; padding:36px 30px;}
+  .login-card h1{font-family:var(--serif); font-size:21px; text-align:center; margin-bottom:6px;}
+  .login-card .sub{font-size:12.5px; color:var(--lavender); text-align:center; margin-bottom:24px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-size:12px; color:var(--lavender); margin-bottom:5px;}
+  .field input{width:100%; padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.04); border:1px solid rgba(243,233,218,0.18); color:var(--cream); font-size:14px;}
+  .field input:focus{outline:none; border-color:var(--gold);}
+  .err-msg{font-size:12px; color:var(--err); margin-top:10px; text-align:center;}
+  .login-card .btn{width:100%; padding:11px; margin-top:6px;}
+
+  .toast{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:var(--night-3); border:1px solid var(--gold); color:var(--cream); padding:11px 20px; border-radius:999px;
+    font-size:13px; z-index:100; transition:all .25s; pointer-events:none;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  @media (max-width:640px){
+    .req-card{flex-wrap:wrap;}
+    .req-actions{width:100%; justify-content:flex-end;}
+    main{padding:24px 16px 60px;}
+    .topbar{padding:14px 16px;}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script type="module">
+/*
+  หน้านี้เชื่อมกับไฟล์ที่ทำไว้ก่อนหน้าโดยตรง:
+    - jai-aksorn-api-client.js  → fetchPendingRequests(), approveRequest(), rejectRequest()
+    - jai-aksorn-auth.js        → signInWithPassword(), requireAdmin(), onAuthChange(), signOut()
+  ต้องวางไฟล์ทั้งสามไว้โฟลเดอร์เดียวกัน และรันผ่านเซิร์ฟเวอร์ (เช่น `vite` หรือ
+  `npx serve`) เพราะเบราว์เซอร์ไม่อนุญาตให้ import ES module ข้ามไฟล์เวลาเปิด
+  ผ่าน file:// ตรง ๆ — อย่าลืมใส่ SUPABASE_URL / SUPABASE_ANON_KEY ในไฟล์
+  jai-aksorn-api-client.js ก่อนใช้งานจริง
+*/
+import { fetchPendingRequests, approveRequest, rejectRequest } from './jai-aksorn-api-client.js';
+import { signInWithPassword, getCurrentUser, requireAdmin, onAuthChange, signOut } from './jai-aksorn-auth.js';
+import { supabase } from './jai-aksorn-api-client.js';
+
+const app = document.getElementById('app');
+
+let state = {
+  adminUser: null,
+  loginError: null,
+  loading: true,
+  pending: [],
+  history: [],   // เก็บรายการที่เพิ่งตัดสินใจไว้โชว์ผลทันที ระหว่างรอโหลดใหม่
+  modalUrl: null,
+};
+
+function toast(msg){
+  let t = document.querySelector('.toast');
+  if(!t){ t=document.createElement('div'); t.className='toast'; document.body.appendChild(t); }
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>t.classList.remove('show'), 2400);
+}
+
+function icSeal(){
+  return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.4 7.2 16.9l.9-5.4L4.2 7.7l5.4-.8Z"/></svg>`;
+}
+
+/* ============ LOGIN VIEW ============ */
+function renderLogin(){
+  return `
+  <div class="login-wrap">
+    <div class="login-card">
+      <h1>เข้าสู่ระบบแอดมิน ${icSeal()}</h1>
+      <div class="sub">สำหรับตรวจสอบและอนุมัติคำขอปลดล็อกตอนอ่าน</div>
+      <form id="login-form">
+        <div class="field"><label>อีเมลแอดมิน</label><input type="email" name="email" required></div>
+        <div class="field"><label>รหัสผ่าน</label><input type="password" name="password" required></div>
+        <button class="btn btn-gold" type="submit">เข้าสู่ระบบ</button>
+        ${state.loginError ? `<div class="err-msg">${state.loginError}</div>` : ''}
+      </form>
+    </div>
+  </div>`;
+}
+
+/* ============ DASHBOARD VIEW ============ */
+function reqCard(r, withActions){
+  const chapTitle = r.chapters?.title ?? '-';
+  const novelTitle = r.chapters?.novels?.title ?? '-';
+  const userName = r.profiles?.display_name ?? r.user_id;
+  const price = r.chapters?.price_coins ?? '-';
+  const when = new Date(r.created_at ?? Date.now()).toLocaleString('th-TH');
+
+  return `
+  <div class="req-card">
+    ${r.slip_signed_url
+      ? `<img src="${r.slip_signed_url}" data-action="zoom" data-url="${r.slip_signed_url}" alt="สลิป">`
+      : `<div class="skeleton"></div>`}
+    <div class="req-info">
+      <div class="t">${novelTitle} — ${chapTitle}</div>
+      <div class="m">
+        <span>👤 ${userName}</span>
+        <span class="price">${price} เหรียญ</span>
+        <span>${when}</span>
+      </div>
+    </div>
+    ${withActions ? `
+      <div class="req-actions">
+        <button class="btn btn-gold btn-sm" data-action="approve" data-id="${r.id}">อนุมัติ</button>
+        <button class="btn btn-ghost btn-sm" data-action="reject" data-id="${r.id}">ปฏิเสธ</button>
+      </div>`
+      : `<span class="status-pill status-${r.status}">${r.status==='approved'?'✓ อนุมัติแล้ว':'✕ ปฏิเสธแล้ว'}</span>`
+    }
+  </div>`;
+}
+
+function renderDashboard(){
+  const pending = state.pending;
+  const history = state.history;
+
+  return `
+  <div class="topbar">
+    <div class="brand">ใจอักษร <span class="tag">ADMIN</span></div>
+    <div class="who">
+      <span>${state.adminUser?.email ?? ''}</span>
+      <button class="btn btn-ghost btn-sm" data-action="refresh">โหลดใหม่</button>
+      <button class="btn btn-ghost btn-sm" data-action="logout">ออกจากระบบ</button>
+    </div>
+  </div>
+  <main>
+    <div class="stat-strip">
+      <div class="stat"><div class="n">${pending.length}</div><div class="l">รอตรวจสอบ</div></div>
+      <div class="stat"><div class="n">${history.filter(h=>h.status==='approved').length}</div><div class="l">อนุมัติวันนี้</div></div>
+      <div class="stat"><div class="n">${history.filter(h=>h.status==='rejected').length}</div><div class="l">ปฏิเสธวันนี้</div></div>
+    </div>
+
+    <h2>คำขอที่รอตรวจสอบ <span class="count-badge">${pending.length}</span></h2>
+    ${state.loading ? `<div class="empty">กำลังโหลด...</div>`
+      : pending.length===0 ? `<div class="empty">ไม่มีคำขอค้างตรวจสอบตอนนี้ 🎉</div>`
+      : pending.map(r=>reqCard(r,true)).join('')}
+
+    ${history.length>0?`
+    <h2 style="margin-top:34px;">ผลที่เพิ่งตัดสินใจ</h2>
+    ${history.map(r=>reqCard(r,false)).join('')}
+    `:''}
+  </main>
+
+  <div class="modal-bg ${state.modalUrl?'open':''}" data-action="close-modal">
+    ${state.modalUrl?`<img src="${state.modalUrl}" alt="สลิปขยาย"><button class="modal-close" data-action="close-modal">✕</button>`:''}
+  </div>`;
+}
+
+/* ============ RENDER + DATA LOADING ============ */
+async function loadPending(){
+  state.loading = true;
+  render();
+  try{
+    state.pending = await fetchPendingRequests();
+  }catch(err){
+    toast('โหลดคำขอไม่สำเร็จ: ' + err.message);
+    state.pending = [];
+  }
+  state.loading = false;
+  render();
+}
+
+function render(){
+  app.innerHTML = state.adminUser ? renderDashboard() : renderLogin();
+  bind();
+}
+
+function bind(){
+  const loginForm = document.getElementById('login-form');
+  if(loginForm){
+    loginForm.addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      state.loginError = null;
+      const fd = new FormData(loginForm);
+      try{
+        await signInWithPassword({ email: fd.get('email'), password: fd.get('password') });
+        const admin = await requireAdmin(()=>{ throw new Error('บัญชีนี้ไม่มีสิทธิ์แอดมิน'); });
+        state.adminUser = admin;
+        await loadPending();
+      }catch(err){
+        state.loginError = 'เข้าสู่ระบบไม่สำเร็จ หรือบัญชีนี้ไม่มีสิทธิ์แอดมิน';
+        await signOut();
+        render();
+      }
+    });
+  }
+
+  document.querySelectorAll('[data-action="refresh"]').forEach(el=>el.addEventListener('click', loadPending));
+  document.querySelectorAll('[data-action="logout"]').forEach(el=>el.addEventListener('click', async ()=>{
+    await signOut();
+    state.adminUser = null;
+    render();
+  }));
+
+  document.querySelectorAll('[data-action="zoom"]').forEach(el=>el.addEventListener('click', ()=>{
+    state.modalUrl = el.dataset.url;
+    render();
+  }));
+  document.querySelectorAll('[data-action="close-modal"]').forEach(el=>el.addEventListener('click', (e)=>{
+    if(e.target.dataset.action==='close-modal'){ state.modalUrl = null; render(); }
+  }));
+
+  document.querySelectorAll('[data-action="approve"]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      const id = el.dataset.id;
+      el.disabled = true;
+      try{
+        const updated = await approveRequest(id, state.adminUser.id);
+        toast('อนุมัติแล้ว — ผู้อ่านปลดล็อกตอนนี้ได้ทันที');
+        moveToHistory(id, updated);
+      }catch(err){
+        toast('อนุมัติไม่สำเร็จ: ' + err.message);
+        el.disabled = false;
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-action="reject"]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      const id = el.dataset.id;
+      el.disabled = true;
+      try{
+        const updated = await rejectRequest(id, state.adminUser.id);
+        toast('ปฏิเสธคำขอแล้ว');
+        moveToHistory(id, updated);
+      }catch(err){
+        toast('ดำเนินการไม่สำเร็จ: ' + err.message);
+        el.disabled = false;
+      }
+    });
+  });
+}
+
+function moveToHistory(id, updated){
+  const idx = state.pending.findIndex(r=>r.id===id);
+  if(idx>-1){
+    const [row] = state.pending.splice(idx,1);
+    state.history.unshift({ ...row, status: updated.status });
+  }
+  render();
+}
+
+/* ============ BOOT ============ */
+(async function boot(){
+  onAuthChange(async (user)=>{
+    if(!user){ state.adminUser = null; render(); return; }
+  });
+
+  const user = await getCurrentUser();
+  if(user){
+    const admin = await requireAdmin(()=>{ state.adminUser=null; });
+    if(admin){ state.adminUser = admin; await loadPending(); return; }
+  }
+  state.loading = false;
+  render();
+})();
+</script>
+</body>
+</html>
