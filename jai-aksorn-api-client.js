@@ -20,8 +20,8 @@ import { createClient } from '@supabase/supabase-js';
 // ค่าสองตัวนี้หาได้จาก Supabase Dashboard -> Project Settings -> API
 // ห้ามใส่ "service_role key" ที่นี่เด็ดขาด (นั่นคือกุญแจแอดมินสูงสุด ต้องอยู่
 // บนเซิร์ฟเวอร์เท่านั้น) ใช้ "anon public key" ซึ่งปลอดภัยสำหรับฝั่งเว็บ
-const SUPABASE_URL = 'https://YOUR-PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
+const SUPABASE_URL = 'https://pzukzyxhnfllwbtdkfcv.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_z9YWKp8CMPdgDS_tvsskLg_VBQaLuf7';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
