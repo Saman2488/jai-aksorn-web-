@@ -68,7 +68,8 @@ export async function getMyProfile() {
     .from('profiles')
     .select('*')
     .eq('id', auth.user.id)
-    .single();
+    .maybeSingle(); // คืนค่า null ถ้ายังไม่มีแถว profiles แทนที่จะ throw error 406
+                     // (ต่างจาก .single() ที่บังคับว่าต้องเจอแถวเดียวเป๊ะ)
   if (error) throw error;
   return data;
 }
