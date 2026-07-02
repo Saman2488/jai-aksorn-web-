@@ -325,6 +325,61 @@
   }
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
 
+  /* ---------- Payment / slip upload ---------- */
+  .pay-card{
+    max-width:460px; margin:60px auto; background:var(--night-2); color:var(--cream);
+    border-radius:18px; padding:36px 32px; border:1px solid rgba(212,168,87,0.25);
+  }
+  .pay-card h2{font-family:var(--serif); font-size:20px; margin-bottom:6px; text-align:center;}
+  .pay-card .sub{font-size:13px; color:var(--lavender); text-align:center; margin-bottom:26px;}
+  .qr-box{
+    width:180px; height:180px; margin:0 auto 18px; background:repeating-conic-gradient(#fbf5ea 0% 25%, #1b1330 0% 50%) 0 0/22px 22px;
+    border-radius:12px; border:6px solid var(--paper); display:flex; align-items:center; justify-content:center;
+  }
+  .qr-box span{background:var(--paper); color:var(--ink); font-size:10px; padding:4px 8px; border-radius:6px; font-family:var(--ui);}
+  .acc-info{background:rgba(255,255,255,0.04); border:1px solid rgba(243,233,218,0.14); border-radius:10px; padding:14px 16px; margin-bottom:22px; font-size:13px; line-height:1.9;}
+  .acc-info b{color:var(--gold-soft);}
+  .upload-box{
+    border:1.5px dashed rgba(212,168,87,0.4); border-radius:12px; padding:22px; text-align:center; margin-bottom:18px; cursor:pointer;
+    transition:border-color .2s, background .2s;
+  }
+  .upload-box:hover{border-color:var(--gold); background:rgba(212,168,87,0.05);}
+  .upload-box input{display:none;}
+  .upload-box .slip-preview{max-width:100%; max-height:180px; border-radius:8px; margin-top:10px;}
+  .upload-box .hint{font-size:12.5px; color:var(--lavender); margin-top:8px;}
+  .status-pill{
+    display:inline-flex; align-items:center; gap:6px; font-size:12.5px; padding:6px 13px; border-radius:999px;
+  }
+  .status-pending{background:rgba(212,168,87,0.14); color:var(--gold-soft); border:1px solid rgba(212,168,87,0.35);}
+  .status-approved{background:rgba(122,180,122,0.14); color:#8fd18f; border:1px solid rgba(122,180,122,0.35);}
+  .status-rejected{background:rgba(181,73,91,0.14); color:#e08b98; border:1px solid rgba(181,73,91,0.35);}
+
+  /* ---------- Admin ---------- */
+  .admin-badge{font-size:10px; background:var(--seal); color:var(--paper); padding:2px 7px; border-radius:5px; margin-left:6px; vertical-align:middle;}
+  .req-row{
+    display:flex; gap:14px; align-items:center; padding:14px; border:1px solid rgba(212,168,87,0.14); border-radius:12px; margin-bottom:12px;
+  }
+  .req-row img{width:70px; height:52px; object-fit:cover; border-radius:8px; flex-shrink:0; border:1px solid rgba(243,233,218,0.15);}
+  .req-row .info{flex:1; min-width:0;}
+  .req-row .info .t{font-size:13.5px; font-family:var(--serif);}
+  .req-row .info .m{font-size:11.5px; color:var(--lavender);}
+  .req-actions{display:flex; gap:8px; flex-shrink:0;}
+
+  /* ---------- Mobile nav ---------- */
+  .hamburger{display:none; width:38px; height:38px; align-items:center; justify-content:center; border-radius:9px;}
+  .hamburger span, .hamburger::before, .hamburger::after{display:none;}
+  .mobile-menu{
+    display:none; position:fixed; inset:0; z-index:60; background:rgba(24,16,38,0.97); backdrop-filter:blur(6px);
+    flex-direction:column; padding:22px 26px; gap:4px;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu .mm-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;}
+  .mobile-menu button.mm-link{
+    text-align:left; padding:16px 4px; font-size:17px; border-bottom:1px solid rgba(243,233,218,0.1); font-family:var(--serif);
+  }
+  .mobile-menu .mm-close{width:36px; height:36px; border-radius:50%; border:1px solid rgba(243,233,218,0.2); font-size:18px;}
+  .mobile-menu .mm-user{margin-top:26px; display:flex; flex-direction:column; gap:12px;}
+
   @media (max-width: 880px){
     .hero-inner{grid-template-columns:1fr;}
     .constellation{display:none;}
@@ -334,15 +389,61 @@
     .dash{grid-template-columns:1fr;}
     .profile-body{grid-template-columns:1fr;}
     .navlinks{display:none;}
-    .topbar{padding:14px 18px;}
+    .hamburger{display:flex;}
+    .topbar{padding:12px 16px;}
     .section, .container{padding-left:18px; padding-right:18px;}
+    .coin-pill{display:none;}
+  }
+
+  @media (max-width: 600px){
+    .hero{padding:56px 18px 64px;}
+    .hero h1{font-size:30px;}
+    .hero p{font-size:14.5px;}
+    .hero-actions{flex-direction:column;}
+    .hero-actions .btn{width:100%; text-align:center;}
+    .grid{grid-template-columns:repeat(2,1fr); gap:12px;}
+    .cover{height:160px;}
+    .card-body{padding:10px 12px 14px;}
+    .card-body h3{font-size:13.5px;}
+    .section{padding:40px 18px;}
+    .section-head h2{font-size:20px;}
+    .novel-hero{padding:28px 18px 24px; gap:22px;}
+    .novel-cover{width:140px; height:196px;}
+    .novel-info h1{font-size:24px;}
+    .stat-row{gap:16px; flex-wrap:wrap;}
+    .novel-actions{flex-direction:column;}
+    .novel-actions .btn{width:100%; text-align:center;}
+    .strand-wrap{padding:10px 18px 60px;}
+    .strand{padding-left:28px;}
+    .chap::before{left:-24px;}
+    .chap-title{font-size:13.5px; gap:8px;}
+    .reader-top{padding:12px 16px;}
+    .reader-top .ttl{display:none;}
+    .reader-body{padding:34px 18px 70px;}
+    .reader-body h1{font-size:21px;}
+    .reader-text{font-size:16.5px !important; line-height:1.95;}
+    .reader-nav{flex-direction:column; padding:14px 18px 50px;}
+    .auth-card{width:100%; padding:32px 24px;}
+    .dash{padding:26px 18px 60px; gap:22px;}
+    .profile-head{padding:34px 18px 22px; gap:14px;}
+    .profile-body{padding:0 18px 60px; gap:22px;}
+    .wallet-card{padding:0 18px;}
+    .wallet-inner{flex-direction:column; align-items:flex-start; gap:16px;}
+    .pay-card{margin:28px auto; padding:28px 20px; width:calc(100% - 36px);}
+    .paywall{margin:40px auto; padding:34px 24px; width:calc(100% - 36px);}
+    .req-row{flex-wrap:wrap;}
   }
 </style>
 </head>
 <body>
 <div id="app"></div>
 
-<script>
+<script type="module">
+/* เชื่อมกับ Supabase จริงผ่านไฟล์ jai-aksorn-auth.js และ jai-aksorn-api-client.js
+   ต้องวางไฟล์เหล่านี้ไว้โฟลเดอร์เดียวกันตอน deploy (ทำไว้แล้วบน GitHub repo) */
+import { signUpWithPassword, signInWithPassword, signOut as realSignOut, getCurrentUser, completeSignupAfterEmailConfirm } from './jai-aksorn-auth.js';
+import { getMyProfile } from './jai-aksorn-api-client.js';
+
 /* ============ MOCK DATA ============ */
 const GENRES = ["โรแมนซ์แฟนตาซี","โรแมนซ์ดราม่า","สลับร่าง/รักต่างมิติ","โรแมนซ์คอมเมดี้"];
 
@@ -407,7 +508,13 @@ let state = {
   editingNovelId:null,
   newChapterFree:true,
   newChapterPrice:5,
+  mobileMenuOpen:false,
+  slipDataUrl:null,
 };
+
+/* unlock requests submitted with a transfer slip, waiting on admin review */
+let unlockRequests = [];
+let reqIdCounter = 1;
 
 function toast(msg){
   let t = document.querySelector('.toast');
@@ -420,6 +527,39 @@ function toast(msg){
 
 function fmt(n){ return n>=1000? (n/1000).toFixed(1).replace('.0','')+'k' : n; }
 
+/* ดึงโปรไฟล์จริงจาก Supabase (ตาราง profiles) มาใส่ใน state.user ของหน้าเว็บ
+   เก็บ following/purchased ไว้ในเบราว์เซอร์ชั่วคราวก่อน (ยังไม่ได้ผูกกับ
+   ตาราง follows/purchases จริงในไฟล์นี้ — เป็นขั้นถัดไปที่ต้องเชื่อมเพิ่ม) */
+async function loadRealUserIntoState(authUser){
+  try{
+    let profile = await getMyProfile();
+    if(!profile){
+      // ยังไม่มีแถวใน profiles (เช่นเพิ่งกดยืนยันอีเมลครั้งแรก) สร้างให้อัตโนมัติ
+      await completeSignupAfterEmailConfirm();
+      profile = await getMyProfile();
+    }
+    if(!profile){ state.user = null; return; }
+    state.user = {
+      id: profile.id,
+      name: profile.display_name,
+      coins: profile.coins,
+      isAdmin: profile.is_admin,
+      following: state.user?.following ?? [],
+      purchased: state.user?.purchased ?? [],
+      myNovelIds: state.user?.myNovelIds ?? [],
+    };
+  }catch(err){
+    console.error('โหลดโปรไฟล์ไม่สำเร็จ:', err);
+    state.user = null;
+  }
+}
+
+function mockUsersByName(name){
+  /* This demo only tracks one signed-in user per browser session (no real backend/database yet),
+     so the admin approving a request unlocks it for the currently signed-in account. */
+  return state.user && state.user.name === name ? state.user : state.user;
+}
+
 function ensureUser(){
   if(!state.user){
     navigate('auth');
@@ -430,6 +570,7 @@ function ensureUser(){
 
 function navigate(view, params={}){
   state.view = view;
+  state.mobileMenuOpen = false;
   Object.assign(state, params);
   window.scrollTo(0,0);
   render();
@@ -469,6 +610,7 @@ function renderTopbar(){
       <button data-nav="home" class="${state.view==='home'?'active':''}">หน้าแรก</button>
       <button data-nav="upload" class="${state.view==='upload'?'active':''}">เขียนนิยาย</button>
       ${u?`<button data-nav="profile" class="${state.view==='profile'?'active':''}">โปรไฟล์</button>`:''}
+      ${u&&u.isAdmin?`<button data-nav="admin" class="${state.view==='admin'?'active':''}">แอดมิน</button>`:''}
     </div>
     <div class="nav-right">
       ${u?`
@@ -478,6 +620,24 @@ function renderTopbar(){
         <button class="btn btn-ghost" data-authmode="login" data-nav="auth">เข้าสู่ระบบ</button>
         <button class="btn btn-gold" data-authmode="signup" data-nav="auth">สมัครสมาชิก</button>
       `}
+      <button class="hamburger btn-ghost" data-action="open-menu" aria-label="เมนู">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu ${state.mobileMenuOpen?'open':''}">
+    <div class="mm-top">
+      <div class="brand" style="font-size:19px;">ใจอักษร</div>
+      <button class="mm-close" data-action="close-menu">✕</button>
+    </div>
+    <button class="mm-link" data-action="close-menu" data-nav="home">หน้าแรก</button>
+    <button class="mm-link" data-action="close-menu" data-nav="upload">เขียนนิยาย</button>
+    ${u?`<button class="mm-link" data-action="close-menu" data-nav="profile">โปรไฟล์ · ${ic.coin} ${u.coins} เหรียญ</button>`:''}
+    ${u&&u.isAdmin?`<button class="mm-link" data-action="close-menu" data-nav="admin">แอดมิน</button>`:''}
+    <div class="mm-user">
+      ${u? `<button class="btn btn-ghost" data-action="close-menu" data-nav="profile">บัญชีของฉัน</button>`
+          : `<button class="btn btn-ghost" data-action="close-menu" data-authmode="login" data-nav="auth">เข้าสู่ระบบ</button>
+             <button class="btn btn-gold" data-action="close-menu" data-authmode="signup" data-nav="auth">สมัครสมาชิก</button>`}
     </div>
   </div>`;
 }
@@ -631,14 +791,21 @@ function renderReader(){
   const idx = n.chapters.findIndex(x=>x.id===c.id);
   const prev = n.chapters[idx-1], next = n.chapters[idx+1];
 
+  const myReq = state.user ? unlockRequests.find(r=>r.userId===state.user.name && r.novelId===n.id && r.chapterId===c.id && r.status!=='rejected') : null;
+
   const body = locked ? `
     <div class="paywall">
       <div class="seal">${ic.seal}</div>
       <h2>ตอนนี้ต้องปลดล็อกก่อนอ่าน</h2>
-      <p>${n.title} — ${c.title}<br>สนับสนุนนักเขียนด้วยเหรียญเพื่ออ่านตอนนี้แบบเต็ม ๆ</p>
-      <div class="price-big">${c.price} <span>เหรียญ</span></div>
-      <button class="btn btn-seal" style="width:100%; padding:13px;" data-action="unlock" data-id="${n.id}" data-chap="${c.id}">ปลดล็อกตอนนี้</button>
-      <div style="margin-top:12px;"><button class="btn btn-ghost" style="width:100%; padding:11px;" data-nav="novel" data-id="${n.id}">ย้อนกลับไปหน้ารายละเอียด</button></div>
+      <p>${n.title} — ${c.title}<br>สนับสนุนนักเขียนด้วยการโอนเงินและแนบสลิป แอดมินจะตรวจสอบและปลดล็อกให้</p>
+      <div class="price-big">${c.price} <span>เหรียญ (≈ ${c.price*10} บาท)</span></div>
+      ${myReq ? `
+        <div class="status-pill status-pending" style="width:100%; justify-content:center; padding:12px;">⏳ ส่งสลิปแล้ว รอแอดมินตรวจสอบ</div>
+        <div style="margin-top:14px;"><button class="btn btn-ghost" style="width:100%; padding:11px;" data-nav="novel" data-id="${n.id}">ย้อนกลับไปหน้ารายละเอียด</button></div>
+      ` : `
+        <button class="btn btn-seal" style="width:100%; padding:13px;" data-nav="payment" data-id="${n.id}" data-chap="${c.id}">โอนเงิน / แนบสลิปปลดล็อก</button>
+        <div style="margin-top:12px;"><button class="btn btn-ghost" style="width:100%; padding:11px;" data-nav="novel" data-id="${n.id}">ย้อนกลับไปหน้ารายละเอียด</button></div>
+      `}
     </div>
   ` : `
     <div class="reader-body">
@@ -693,6 +860,9 @@ function renderAuth(){
       <div class="auth-switch">
         ${isLogin?'ยังไม่มีบัญชี?':'มีบัญชีอยู่แล้ว?'}
         <button data-authmode="${isLogin?'signup':'login'}" data-nav="auth">${isLogin?'สมัครสมาชิก':'เข้าสู่ระบบ'}</button>
+      </div>
+      <div class="auth-switch" style="margin-top:8px; opacity:0.6; font-size:11.5px;">
+        (ทดลองใช้: อีเมลที่มีคำว่า "admin" เช่น admin@test.com จะเข้าสู่หน้าแอดมิน)
       </div>
     </div>
   </div>
@@ -798,6 +968,7 @@ function renderProfile(){
       <h1>${u.name}</h1>
       <div class="sub">สมาชิกใจอักษร</div>
     </div>
+    <button class="btn btn-ghost" style="margin-left:auto;" data-action="logout">ออกจากระบบ</button>
   </div>
   <div class="wallet-card">
     <div class="wallet-inner">
@@ -839,6 +1010,80 @@ function renderProfile(){
   `;
 }
 
+/* ============ PAYMENT (slip upload) ============ */
+function renderPayment(){
+  if(!ensureUser()) return '';
+  const n = novels.find(x=>x.id===state.novelId);
+  const c = n && n.chapters.find(x=>x.id===state.chapterId);
+  if(!n || !c) return renderHome();
+
+  return `
+  ${renderTopbar()}
+  <div class="pay-card">
+    <h2>โอนเงินเพื่อปลดล็อก</h2>
+    <div class="sub">${n.title} — ${c.title}</div>
+    <div class="qr-box"><span>ตัวอย่าง QR พร้อมเพย์</span></div>
+    <div class="acc-info">
+      ชื่อบัญชี: <b>บจก. ใจอักษร มีเดีย</b><br>
+      พร้อมเพย์: <b>099-xxx-xxxx</b><br>
+      จำนวนเงิน: <b>${c.price*10} บาท</b> (${c.price} เหรียญ)
+    </div>
+    <form id="payment-form">
+      <label class="upload-box" id="upload-label">
+        <input type="file" accept="image/*" id="slip-input">
+        <div id="upload-placeholder">
+          📎 แตะเพื่อแนบรูปสลิปโอนเงิน
+          <div class="hint">รองรับไฟล์ภาพ JPG / PNG</div>
+        </div>
+        <img id="slip-preview" class="slip-preview" style="display:none;">
+      </label>
+      <button class="btn btn-gold" style="width:100%; padding:13px;" type="submit">ส่งสลิปให้แอดมินตรวจสอบ</button>
+    </form>
+    <div style="margin-top:12px;"><button class="btn btn-ghost" style="width:100%; padding:11px;" data-nav="reader" data-id="${n.id}" data-chap="${c.id}">ย้อนกลับ</button></div>
+  </div>
+  `;
+}
+
+/* ============ ADMIN ============ */
+function renderAdmin(){
+  if(!state.user || !state.user.isAdmin) return renderHome();
+  const pending = unlockRequests.filter(r=>r.status==='pending');
+  const history = unlockRequests.filter(r=>r.status!=='pending').slice(-8).reverse();
+
+  const rowHtml = (r, withActions)=>{
+    const n = novels.find(x=>x.id===r.novelId);
+    const c = n && n.chapters.find(x=>x.id===r.chapterId);
+    return `
+    <div class="req-row">
+      <img src="${r.slipDataUrl}" alt="สลิป">
+      <div class="info">
+        <div class="t">${r.userId} · ${n?n.title:'-'} — ${c?c.title:'-'}</div>
+        <div class="m">${c?c.price:'-'} เหรียญ · ${new Date(r.timestamp).toLocaleString('th-TH')}</div>
+      </div>
+      ${withActions ? `
+      <div class="req-actions">
+        <button class="btn btn-gold" style="padding:8px 14px; font-size:12.5px;" data-action="approve-req" data-id="${r.id}">อนุมัติ</button>
+        <button class="btn btn-ghost" style="padding:8px 14px; font-size:12.5px;" data-action="reject-req" data-id="${r.id}">ปฏิเสธ</button>
+      </div>` : `<span class="status-pill status-${r.status}">${r.status==='approved'?'✓ อนุมัติแล้ว':'✕ ปฏิเสธแล้ว'}</span>`}
+    </div>`;
+  };
+
+  return `
+  ${renderTopbar()}
+  <div class="dash" style="grid-template-columns:1fr;">
+    <div class="dash-panel">
+      <h2>คำขอปลดล็อกที่รอตรวจสอบ <span class="admin-badge">ADMIN</span> (${pending.length})</h2>
+      ${pending.length===0?`<div class="empty">ยังไม่มีคำขอใหม่</div>`:pending.map(r=>rowHtml(r,true)).join('')}
+    </div>
+    <div class="dash-panel">
+      <h2>ประวัติล่าสุด</h2>
+      ${history.length===0?`<div class="empty">ยังไม่มีประวัติ</div>`:history.map(r=>rowHtml(r,false)).join('')}
+    </div>
+  </div>
+  <footer>ใจอักษร — ต้นแบบเว็บไซต์เพื่อสาธิตการใช้งานเท่านั้น</footer>
+  `;
+}
+
 /* ============ RENDER DISPATCH ============ */
 function render(){
   const app = document.getElementById('app');
@@ -850,6 +1095,8 @@ function render(){
     case 'auth': html = renderAuth(); break;
     case 'upload': html = renderUpload(); break;
     case 'profile': html = renderProfile(); break;
+    case 'payment': html = renderPayment(); break;
+    case 'admin': html = renderAdmin(); break;
     default: html = renderHome();
   }
   app.innerHTML = html;
@@ -881,17 +1128,63 @@ function bindEvents(){
     });
   });
 
-  document.querySelectorAll('[data-action="unlock"]').forEach(el=>{
+  document.querySelectorAll('[data-action="open-menu"]').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.mobileMenuOpen = true; render(); });
+  });
+  document.querySelectorAll('[data-action="close-menu"]').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.mobileMenuOpen = false; if(!el.dataset.nav) render(); });
+  });
+
+  const slipInput = document.getElementById('slip-input');
+  if(slipInput){
+    slipInput.addEventListener('change', (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        state.slipDataUrl = reader.result;
+        document.getElementById('upload-placeholder').style.display = 'none';
+        const img = document.getElementById('slip-preview');
+        img.src = state.slipDataUrl;
+        img.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  const paymentForm = document.getElementById('payment-form');
+  if(paymentForm){
+    paymentForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if(!state.slipDataUrl){ toast('กรุณาแนบรูปสลิปก่อนส่ง'); return; }
+      unlockRequests.push({
+        id: reqIdCounter++, userId: state.user.name, novelId: state.novelId, chapterId: state.chapterId,
+        slipDataUrl: state.slipDataUrl, status:'pending', timestamp: Date.now()
+      });
+      toast('ส่งสลิปแล้ว รอแอดมินตรวจสอบ');
+      state.slipDataUrl = null;
+      navigate('reader', {novelId: state.novelId, chapterId: state.chapterId});
+    });
+  }
+
+  document.querySelectorAll('[data-action="approve-req"]').forEach(el=>{
     el.addEventListener('click', ()=>{
-      if(!ensureUser()) return;
-      const nid = parseInt(el.dataset.id), cid = parseInt(el.dataset.chap);
-      const n = novels.find(x=>x.id===nid);
-      const c = n.chapters.find(x=>x.id===cid);
-      const u = state.user;
-      if(u.coins < c.price){ toast('เหรียญไม่พอ — เติมเหรียญที่หน้าโปรไฟล์'); return; }
-      u.coins -= c.price;
-      u.purchased.push(nid+'-'+cid);
-      toast(`ปลดล็อก "${c.title}" สำเร็จ`);
+      const r = unlockRequests.find(x=>x.id===parseInt(el.dataset.id));
+      if(!r) return;
+      r.status = 'approved';
+      const key = r.novelId+'-'+r.chapterId;
+      const buyer = mockUsersByName(r.userId);
+      if(buyer && !buyer.purchased.includes(key)) buyer.purchased.push(key);
+      toast('อนุมัติคำขอแล้ว ผู้อ่านปลดล็อกตอนนี้ได้ทันที');
+      render();
+    });
+  });
+  document.querySelectorAll('[data-action="reject-req"]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const r = unlockRequests.find(x=>x.id===parseInt(el.dataset.id));
+      if(!r) return;
+      r.status = 'rejected';
+      toast('ปฏิเสธคำขอแล้ว');
       render();
     });
   });
@@ -899,6 +1192,15 @@ function bindEvents(){
   document.querySelectorAll('[data-action="font-"], [data-action="font+"]').forEach(el=>{});
   document.querySelectorAll('[data-action="font-"]').forEach(el=>el.addEventListener('click',()=>{state.fontSize=Math.max(14,state.fontSize-1); render();}));
   document.querySelectorAll('[data-action="font+"]').forEach(el=>el.addEventListener('click',()=>{state.fontSize=Math.min(24,state.fontSize+1); render();}));
+
+  document.querySelectorAll('[data-action="logout"]').forEach(el=>{
+    el.addEventListener('click', async ()=>{
+      await realSignOut();
+      state.user = null;
+      toast('ออกจากระบบแล้ว');
+      navigate('home');
+    });
+  });
 
   document.querySelectorAll('[data-action="topup"]').forEach(el=>{
     el.addEventListener('click', ()=>{
@@ -933,15 +1235,37 @@ function bindEvents(){
 
   const authForm = document.getElementById('auth-form');
   if(authForm){
-    authForm.addEventListener('submit', (e)=>{
+    authForm.addEventListener('submit', async (e)=>{
       e.preventDefault();
       const fd = new FormData(authForm);
-      const name = fd.get('name') || (fd.get('email')||'').toString().split('@')[0] || 'นักอ่าน';
-      state.user = {
-        name, coins: 20, following: [], purchased: [], myNovelIds: []
-      };
-      toast(`ยินดีต้อนรับ ${name}`);
-      navigate('home');
+      const email = (fd.get('email')||'').toString();
+      const password = (fd.get('password')||'').toString();
+      const name = (fd.get('name')||'').toString() || email.split('@')[0] || 'นักอ่าน';
+
+      const submitBtn = authForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+
+      try{
+        if(state.authMode === 'signup'){
+          const { needsEmailConfirmation } = await signUpWithPassword({ email, password, displayName: name });
+          if(needsEmailConfirmation){
+            toast('สมัครสำเร็จ! เช็คอีเมลของคุณเพื่อกดยืนยันก่อนเข้าสู่ระบบ (เช็คโฟลเดอร์สแปมด้วยถ้าไม่เจอ)');
+            navigate('home');
+            return;
+          }
+        } else {
+          await signInWithPassword({ email, password });
+        }
+        const authUser = await getCurrentUser();
+        await loadRealUserIntoState(authUser);
+        toast(state.user?.isAdmin ? `เข้าสู่ระบบแอดมิน — สวัสดี ${state.user.name}` : `ยินดีต้อนรับ ${state.user?.name ?? ''}`);
+        navigate(state.user?.isAdmin ? 'admin' : 'home');
+      }catch(err){
+        console.error(err);
+        toast('ไม่สำเร็จ: ' + (err.message || 'กรุณาลองใหม่อีกครั้ง'));
+      }finally{
+        submitBtn.disabled = false;
+      }
     });
   }
 
@@ -986,7 +1310,17 @@ function bindEvents(){
   }
 }
 
-render();
+(async function boot(){
+  try{
+    const authUser = await getCurrentUser();
+    if(authUser){
+      await loadRealUserIntoState(authUser);
+    }
+  }catch(err){
+    console.error('เช็ก session ไม่สำเร็จ:', err);
+  }
+  render();
+})();
 </script>
 </body>
 </html>
