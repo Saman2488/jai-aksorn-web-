@@ -12,14 +12,16 @@
 //  พูดง่าย ๆ: ไฟล์นี้ = "endpoint" ทั้งหมดที่ขอมา แต่เขียนในรูปฟังก์ชัน
 //  JavaScript แทนที่จะเป็น POST /api/xxx เพราะไม่ต้องมีเซิร์ฟเวอร์คั่นกลาง
 //
-//  ติดตั้ง: npm install @supabase/supabase-js
-// ============================================================================
+// ติดตั้ง: ไม่ต้องใช้ npm install เลย เพราะเว็บนี้เป็น static file ล้วน ไม่มี
+// ขั้นตอน build — import ตรงจาก CDN (esm.sh) แทน ซึ่งเบราว์เซอร์เปิดได้เลย
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-import { createClient } from '@supabase/supabase-js';
-
-// ค่าสองตัวนี้หาได้จาก Supabase Dashboard -> Project Settings -> API
-// ห้ามใส่ "service_role key" ที่นี่เด็ดขาด (นั่นคือกุญแจแอดมินสูงสุด ต้องอยู่
-// บนเซิร์ฟเวอร์เท่านั้น) ใช้ "anon public key" ซึ่งปลอดภัยสำหรับฝั่งเว็บ
+// ค่าสองตัวนี้หาได้จาก Supabase Dashboard -> Project Settings -> API Keys
+// ห้ามใส่ "Secret key" (sb_secret_... เดิมเรียกว่า service_role key) ที่นี่
+// เด็ดขาด (นั่นคือกุญแจแอดมินสูงสุด ต้องอยู่บนเซิร์ฟเวอร์เท่านั้น)
+// ใช้ "Publishable key" (sb_publishable_... เดิมเรียกว่า anon public key)
+// ซึ่งปลอดภัยสำหรับฝั่งเว็บ — ชื่อตัวแปรด้านล่างยังคงเป็น SUPABASE_ANON_KEY
+// เพื่อให้เข้ากับ supabase-js SDK แต่ค่าที่ใส่คือ Publishable key ตัวใหม่ได้เลย
 const SUPABASE_URL = 'https://pzukzyxhnfllwbtdkfcv.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_z9YWKp8CMPdgDS_tvsskLg_VBQaLuf7';
 
