@@ -36,7 +36,9 @@ export async function signUpWithPassword({ email, password, displayName }) {
     options: {
       // ข้อมูลนี้จะถูกแนบไปกับ user เพื่อเอาไปสร้างแถวใน profiles หลังยืนยันอีเมลสำเร็จ
       data: { display_name: displayName },
-      emailRedirectTo: 'https://your-domain.com/auth/callback',
+      // ไม่ใส่ emailRedirectTo ตรงนี้ตั้งใจ — ปล่อยให้ Supabase ใช้ค่า "Site URL"
+      // ที่ตั้งไว้ใน Dashboard (Authentication -> URL Configuration) แทน
+      // เพราะเว็บนี้เป็น single-page app หน้าเดียว ไม่มีหน้า /auth/callback แยก
     },
   });
   if (error) throw error;
